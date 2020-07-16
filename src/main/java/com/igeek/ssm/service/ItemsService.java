@@ -56,4 +56,14 @@ public class ItemsService {
     public void add(Items items){
         mapper.insertSelective(items);
     }
+
+    //删除商品
+    public void delete(Items items){
+        mapper.deleteByExample(items);
+    }
+
+    //修改商品
+    public void update(Items items){
+        mapper.updateByExample(items);
+    }
 }

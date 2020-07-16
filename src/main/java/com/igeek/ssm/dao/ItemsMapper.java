@@ -9,7 +9,7 @@ import java.util.List;
 public interface ItemsMapper {
     int countByExample(ItemsExample example);
 
-    int deleteByExample(ItemsExample example);
+    int deleteByExample(Items example);
 
     int deleteByPrimaryKey(Integer id);
 
@@ -34,4 +34,6 @@ public interface ItemsMapper {
     int updateByPrimaryKeyWithBLOBs(Items record);
 
     int updateByPrimaryKey(Items record);
+
+    void updateByExample(Items items);
 }

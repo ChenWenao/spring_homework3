@@ -67,4 +67,40 @@ public class ItemsController {
         //为了避免重复提交表单的操作，可以选择重定向，地址栏显示目标地址
         return "redirect:findAll.action";
     }
+
+    //删除商品
+    @RequestMapping("/delete.action")
+    public void delete(Items items){
+        String pic=items.getPic();
+        File picFile=new File(pic);
+        picFile.delete();
+        service.delete(items);
+    }
+
+    //修改商品
+    @RequestMapping("/update.action")
+    public void update(Items items,MultipartFile newFile) throws IOException {
+        //删除旧图片
+        String oldPic=items.getPic();
+        File oldPicFile=new File(oldPic);
+        oldPicFile.delete();
+
+        //保存新图片
+        if(newFile!=null){
+            //获得原始图片名称
+            String oldName = newFile.getOriginalFilename();
+            System.out.println("oldName = "+oldName);
+            //当前若上传图片
+            if(oldName!=null && oldName.length()>0){
+                //产生新的图片名称 = 随机数+原图片的后缀
+                String newName = UUID.randomUUID()+oldName.substring(oldName.lastIndexOf("."));
+                //将此图片上传至本地图片服务器路径
+                newFile.transferTo(new File("E:/ssm/day3/temp/"+newName));
+                //将此图片传值到items商品中
+                items.setPic("/pic/"+newName);
+            }
+        }
+
+        service.update(items);
+    }
 }
